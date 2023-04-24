@@ -1,6 +1,5 @@
 import '../assets/css/globals.css'
 import '../assets/css/tw-vars.css'
-import Providers from './providers'
 
 export default function RootLayout({
   children,
@@ -9,9 +8,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-Hans">
-      <Providers>
-        <body>{children}</body>
-      </Providers>
+      {/* <Providers> */}
+      <body>{children}</body>
+      {/* </Providers> */}
     </html>
   )
 }
