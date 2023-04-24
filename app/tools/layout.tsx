@@ -1,30 +1,9 @@
 'use client'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useDarkMode } from '~/hooks/use-dark-mode'
-
-export interface SidebarConfig {
-  title: string
-  children: {
-    title: string
-    path: string
-  }[]
-}
-;[]
-const sidebarConfig = [
-  {
-    title: 'Object Change Case',
-    children: [
-      {
-        title: 'Camelcase Keys',
-        path: '/tools/camelcase-keys',
-      },
-      {
-        title: 'Snakecase Keys',
-        path: '/tools/snakecase-keys',
-      },
-    ],
-  },
-] satisfies SidebarConfig[]
+import { sidebarConfig } from './routes'
+import { cn } from '~/lib/utils'
 
 export default function ToolLayout({
   children,
@@ -32,6 +11,8 @@ export default function ToolLayout({
   children: React.ReactNode
 }) {
   useDarkMode()
+  const pathname = usePathname()
+
   return (
     <div>
       <aside className="w-[250px] border-r border-gray-300 h-full overflow-auto p-4 flex flex-col fixed left-0 top-0">
@@ -40,11 +21,22 @@ export default function ToolLayout({
         {sidebarConfig.map((config) => (
           <section key={config.title}>
             <p className="font-medium my-4 text-stone-500">{config.title}</p>
-            {config.children.map((child) => (
-              <Link href={child.path} key={child.path}>
-                <h2 className="text-sm my-2">{child.title}</h2>
-              </Link>
-            ))}
+            {config.children.map((child) => {
+              const jointPath = `${config.path}${child.path}`
+
+              return (
+                <Link href={jointPath} key={jointPath}>
+                  <h2
+                    className={cn(
+                      'text-sm my-2 transition-colors duration-200 ease-in-out hover:text-primary hover:text-opacity-80',
+                      pathname === jointPath ? 'text-primary' : '',
+                    )}
+                  >
+                    {child.title}
+                  </h2>
+                </Link>
+              )
+            })}
           </section>
         ))}
       </aside>

@@ -8,9 +8,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-Hans">
-      {/* <Providers> */}
       <body>{children}</body>
-      {/* </Providers> */}
 
       <Analytics />
     </html>

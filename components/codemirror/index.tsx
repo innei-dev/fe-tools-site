@@ -22,7 +22,7 @@ import { useIsUnmounted } from '~/hooks/use-lifecycle'
 import { useIsClient } from '~/hooks/use-is-client'
 import type { Language } from './use-codemirror-language'
 import { useCodeMirrorLanguage } from './use-codemirror-language'
-import { cn } from '~/lib/utils/css'
+import { cn } from '~/lib/utils'
 
 const LoadingHolder = () => {
   return (

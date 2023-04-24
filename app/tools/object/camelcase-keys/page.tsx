@@ -3,7 +3,7 @@
 import camelcaseKeys from 'camelcase-keys'
 import { useDeferredValue, useEffect, useState } from 'react'
 import { CodeMirrorEditor } from '~/components/codemirror'
-
+import detectIndent from 'detect-indent'
 export default () => {
   const [value, setValue] = useState('')
   const deferredValue = useDeferredValue(value)
@@ -12,9 +12,16 @@ export default () => {
   useEffect(() => {
     try {
       if (!deferredValue) return
+
       const value = JSON.parse(deferredValue)
       if (typeof value !== 'object' && value) return setTransformedValue(value)
-      setTransformedValue(JSON.stringify(camelcaseKeys(value, { deep: true })))
+      setTransformedValue(
+        JSON.stringify(
+          camelcaseKeys(value, { deep: true }),
+          null,
+          detectIndent(deferredValue).amount,
+        ),
+      )
     } catch (e) {
       // message.error((e as Error).message)
     }
