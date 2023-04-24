@@ -18,12 +18,14 @@
     "@codemirror/theme-one-dark": "6.1.2",
     "@codemirror/view": "6.9.5",
     "@ddietr/codemirror-themes": "^1.4.1",
+    "@iconify-json/mingcute": "^1.1.5",
     "@lezer/highlight": "*",
     "@nextui-org/react": "1.0.0-beta.12",
     "@swc/helpers": "^0.5.0",
     "@types/node": "18.16.0",
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
+    "@vercel/analytics": "^1.0.0",
     "autoprefixer": "10.4.14",
     "camelcase-keys": "^8.0.2",
     "eslint": "8.39.0",
@@ -42,6 +44,8 @@
     "@innei/eslint-config-react-ts": "^0.9.8",
     "@innei/prettier": "^0.9.8",
     "@types/lodash-es": "^4.17.7",
-    "prettier": "^2.8.8"
+    "@unocss/preset-icons": "^0.51.8",
+    "prettier": "^2.8.8",
+    "unocss": "^0.51.8"
   }
 }

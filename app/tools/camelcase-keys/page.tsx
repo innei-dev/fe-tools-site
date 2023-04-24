@@ -25,13 +25,13 @@ export default () => {
         value={value}
         onChange={setValue}
         language="json"
-        className="h-[50vh] relative overflow-auto flex-shrink-0 flex-grow"
+        className="!h-[50vh] relative overflow-auto flex-shrink-0 flex-grow"
       />
       <div className="h-[1px] bg-gray-400 w-full" />
       <CodeMirrorEditor
         value={transformedValue}
         language="json"
-        className="flex-shrink-0 h-[50vh] relative overflow-auto flex-grow"
+        className="flex-shrink-0 !h-[50vh] relative overflow-auto flex-grow"
       />
     </section>
   )
