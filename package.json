@@ -16,7 +16,7 @@
     "@codemirror/language-data": "6.3.0",
     "@codemirror/state": "6.2.0",
     "@codemirror/theme-one-dark": "6.1.2",
-    "@codemirror/view": "6.9.5",
+    "@codemirror/view": "6.9.6",
     "@ddietr/codemirror-themes": "^1.4.1",
     "@iconify-json/mingcute": "^1.1.5",
     "@lezer/highlight": "*",
