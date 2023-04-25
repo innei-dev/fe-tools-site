@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useDarkMode } from '~/lib/hooks/use-dark-mode'
 import { cn } from '~/lib/utils'
 
+import { repository } from '../../package.json'
 import { sidebarConfig } from './routes'
 
 export default function ToolLayout({
@@ -19,7 +20,16 @@ export default function ToolLayout({
   return (
     <div>
       <aside className="w-[250px] border-r border-gray-300 h-full overflow-auto p-4 flex flex-col fixed left-0 top-0">
-        <h1 className="font-light text-lg font-mono">FeTools</h1>
+        <div className="relative flex justify-between flex-wrap items-center">
+          <h1 className="font-light text-lg font-mono">FeTools</h1>
+          <a
+            href={repository.url}
+            className="inline-flex items-center flex-shrink-0 ml-4 text-black"
+            target="_blank"
+          >
+            <i className="i-mingcute:github-line inline-block" />
+          </a>
+        </div>
 
         {sidebarConfig.map((config) => (
           <section key={config.title}>

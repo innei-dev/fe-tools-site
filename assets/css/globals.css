@@ -90,3 +90,11 @@ a,
 p {
   @apply antialiased text-black;
 }
+
+a:hover {
+  @apply text-primary;
+}
+
+a:focus {
+  @apply text-primary outline outline-primary;
+}
