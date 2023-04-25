@@ -2,7 +2,7 @@
 
 import snakecaseKeys from 'snakecase-keys'
 import { useDeferredValue, useEffect, useState } from 'react'
-import { CodeMirrorEditor } from '~/components/codemirror'
+import { CodeMirrorEditor } from '~/lib/components/codemirror'
 import detectIndent from 'detect-indent'
 
 export default () => {

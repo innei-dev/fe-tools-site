@@ -11,18 +11,20 @@ import type { EditorState } from '@codemirror/state'
 import { Annotation } from '@codemirror/state'
 import type { EditorView, KeyBinding, ViewUpdate } from '@codemirror/view'
 import { tags } from '@lezer/highlight'
+
 import {
-  useCodeMirrorStyle,
-  useCodeMirrorAutoToggleTheme,
   monospaceFonts,
-} from '~/components/codemirror/use-codemirror-theme'
-import { useIsDark } from '~/hooks/use-dark-mode'
-import { useGetState } from '~/hooks/use-get-state'
-import { useIsUnmounted } from '~/hooks/use-lifecycle'
-import { useIsClient } from '~/hooks/use-is-client'
+  useCodeMirrorAutoToggleTheme,
+  useCodeMirrorStyle,
+} from '~/lib/components/codemirror/use-codemirror-theme'
+import { useIsDark } from '~/lib/hooks/use-dark-mode'
+import { useGetState } from '~/lib/hooks/use-get-state'
+import { useIsClient } from '~/lib/hooks/use-is-client'
+import { useIsUnmounted } from '~/lib/hooks/use-lifecycle'
+import { cn } from '~/lib/utils'
+
 import type { Language } from './use-codemirror-language'
 import { useCodeMirrorLanguage } from './use-codemirror-language'
-import { cn } from '~/lib/utils'
 
 const LoadingHolder = () => {
   return (
@@ -32,7 +34,7 @@ const LoadingHolder = () => {
   )
 }
 
-interface XLogCodeMirrorEditorProps {
+interface CodeMirrorEditorProps {
   value: string
   onChange?: (value: string, viewUpdate: ViewUpdate) => void
   handleDropFile?: (file: File) => void
@@ -45,7 +47,7 @@ interface XLogCodeMirrorEditorProps {
 
 export const CodeMirrorEditor = forwardRef<
   EditorView | null,
-  XLogCodeMirrorEditorProps
+  CodeMirrorEditorProps
 >((props, ref) => {
   const isClient = useIsClient()
   if (!isClient) return null
@@ -55,7 +57,7 @@ CodeMirrorEditor.displayName = 'CodeMirrorEditor'
 
 const LazyCodeMirrorEditor = forwardRef<
   EditorView | null,
-  XLogCodeMirrorEditorProps
+  CodeMirrorEditorProps
 >((props, ref) => {
   const External = useRef(Annotation.define<boolean>()).current
   const [loading, setLoading] = useState(true)

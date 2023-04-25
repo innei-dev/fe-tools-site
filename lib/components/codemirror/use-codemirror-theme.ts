@@ -4,7 +4,8 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import { EditorView } from '@codemirror/view'
 import { githubLight } from '@ddietr/codemirror-themes/theme/github-light'
 
-import { useIsUnmounted } from '../../hooks/use-lifecycle'
+import { useIsUnmounted } from '~/lib/hooks/use-lifecycle'
+
 import { extensionMap } from './constants'
 
 export const monospaceFonts = `"OperatorMonoSSmLig Nerd Font","Cascadia Code PL","FantasqueSansMono Nerd Font","operator mono","Fira code Retina","Fira code","Consolas", Monaco, "Hannotate SC", monospace, -apple-system`

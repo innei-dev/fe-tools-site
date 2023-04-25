@@ -1,13 +1,16 @@
 'use client'
 
 import camelcaseKeys from 'camelcase-keys'
-import { useDeferredValue, useEffect, useState } from 'react'
-import { CodeMirrorEditor } from '~/components/codemirror'
+import { useDeferredValue, useEffect, useRef, useState } from 'react'
+import { CodeMirrorEditor } from '~/lib/components/codemirror'
 import detectIndent from 'detect-indent'
+import type { EditorView } from '@codemirror/view'
 export default () => {
   const [value, setValue] = useState('')
   const deferredValue = useDeferredValue(value)
   const [transformedValue, setTransformedValue] = useState('')
+
+  const cmRef = useRef<EditorView>(null)
 
   useEffect(() => {
     try {
@@ -26,9 +29,17 @@ export default () => {
       // message.error((e as Error).message)
     }
   }, [deferredValue])
+
+  useEffect(() => {
+    setTimeout(() => {
+      cmRef.current?.focus()
+    }, 100)
+  }, [])
+
   return (
     <section className="flex flex-col -mt-4 -ml-4">
       <CodeMirrorEditor
+        ref={cmRef}
         value={value}
         onChange={setValue}
         language="json"

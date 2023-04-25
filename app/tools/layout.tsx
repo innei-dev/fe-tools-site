@@ -1,9 +1,12 @@
 'use client'
+
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useDarkMode } from '~/hooks/use-dark-mode'
-import { sidebarConfig } from './routes'
+
+import { useDarkMode } from '~/lib/hooks/use-dark-mode'
 import { cn } from '~/lib/utils'
+
+import { sidebarConfig } from './routes'
 
 export default function ToolLayout({
   children,
