@@ -23,7 +23,9 @@ export default function ToolLayout({
 
         {sidebarConfig.map((config) => (
           <section key={config.title}>
-            <p className="font-medium my-4 text-stone-500">{config.title}</p>
+            <p className="font-medium my-4 text-sm text-stone-500">
+              {config.title}
+            </p>
             {config.children.map((child) => {
               const jointPath = `${config.path}${child.path}`
 
@@ -31,7 +33,7 @@ export default function ToolLayout({
                 <Link href={jointPath} key={jointPath}>
                   <h2
                     className={cn(
-                      'text-sm my-2 transition-colors duration-200 ease-in-out hover:text-primary hover:text-opacity-80',
+                      'text-base my-2 transition-colors duration-200 ease-in-out hover:text-primary hover:text-opacity-80',
                       pathname === jointPath ? 'text-primary' : '',
                     )}
                   >

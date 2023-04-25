@@ -1,10 +1,12 @@
-import type { EditorView } from '@codemirror/view'
 import { useEffect } from 'react'
-import { extensionMap } from './constants'
 
 import { json } from '@codemirror/lang-json'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
+import type { EditorView } from '@codemirror/view'
+
+import { extensionMap } from './constants'
+
 export type Language = 'json' | 'markdown'
 export const useCodeMirrorLanguage = (
   cm: EditorView | null,

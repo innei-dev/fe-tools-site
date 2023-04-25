@@ -40,7 +40,7 @@ export const useCodeMirrorStyle = (view: EditorView | null) => {
         height: '100%',
       },
       '.cm-content': {
-        paddingBottom: '600px',
+        // paddingBottom: '600px',
       },
       '&.cm-editor.cm-focused': {
         outline: 'none',

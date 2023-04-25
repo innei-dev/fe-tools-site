@@ -16,7 +16,7 @@ import {
   monospaceFonts,
   useCodeMirrorAutoToggleTheme,
   useCodeMirrorStyle,
-} from '~/lib/components/codemirror/use-codemirror-theme'
+} from '~/lib/components/universal/codemirror/use-codemirror-theme'
 import { useIsDark } from '~/lib/hooks/use-dark-mode'
 import { useGetState } from '~/lib/hooks/use-get-state'
 import { useIsClient } from '~/lib/hooks/use-is-client'
