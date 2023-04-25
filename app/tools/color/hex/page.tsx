@@ -1,6 +1,11 @@
 'use client'
 
+import { useState } from 'react'
+import isHexColor from 'validator/es/lib/isHexColor'
+
 import * as Label from '@radix-ui/react-label'
+
+import { Input } from '~/lib/components/ui/Input'
 
 const hexToRGB = (hex: string) => {
   hex = hex.replace('#', '')
@@ -13,20 +18,33 @@ const hexToRGB = (hex: string) => {
 }
 
 export default () => {
+  const [hex, setHex] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   return (
-    <div
-      style={{
-        display: 'flex',
-        padding: '0 20px',
-        flexWrap: 'wrap',
-        gap: 15,
-        alignItems: 'center',
-      }}
-    >
-      <Label.Root className="LabelRoot" htmlFor="hexColor">
-        Hex Color
-      </Label.Root>
-      <input className="Input" type="text" id="firstName" defaultValue="" />
+    <div className="flex flex-col">
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label.Root htmlFor="Hex">Hex Color</Label.Root>
+        <Input
+          placeholder="#39C5BB"
+          className="mt-4 inline-block w-[300px]"
+          type="text"
+          id="Hex"
+          defaultValue="#39C5BB"
+          value={hex}
+          onChange={(e) => {
+            const value = e.target.value
+            if (!isHexColor(value)) {
+              setErrorMessage('Invalid hex color')
+            } else {
+              setErrorMessage('')
+            }
+            setHex(e.target.value)
+          }}
+        />
+        {errorMessage && (
+          <p className="text-sm text-muted-foreground">{errorMessage}</p>
+        )}
+      </div>
     </div>
   )
 }

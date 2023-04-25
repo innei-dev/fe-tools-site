@@ -19,7 +19,7 @@ export default function ToolLayout({
 
   return (
     <div>
-      <aside className="w-[250px] border-r border-gray-300 h-full overflow-auto p-4 flex flex-col fixed left-0 top-0">
+      <aside className="w-[250px] border-r border-gray-300 h-full overflow-auto p-4 flex flex-col fixed left-0 top-0 bg-muted">
         <div className="relative flex justify-between flex-wrap items-center">
           <h1 className="font-light text-lg font-mono">FeTools</h1>
           <a
@@ -43,8 +43,8 @@ export default function ToolLayout({
                 <Link href={jointPath} key={jointPath}>
                   <h2
                     className={cn(
-                      'text-base my-2 transition-colors duration-200 ease-in-out hover:text-primary hover:text-opacity-80',
-                      pathname === jointPath ? 'text-primary' : '',
+                      'text-base my-2 transition-colors duration-200 ease-in-out hover:text-accent hover:text-opacity-80',
+                      pathname === jointPath ? 'text-accent' : '',
                     )}
                   >
                     {child.title}
@@ -56,7 +56,7 @@ export default function ToolLayout({
         ))}
       </aside>
 
-      <main className="ml-[250px] min-h-screen bg-gray-50 p-4">{children}</main>
+      <main className="ml-[250px] min-h-screen p-4">{children}</main>
     </div>
   )
 }
