@@ -1,16 +1,23 @@
 'use client'
 
-import { useState } from 'react'
+import type { FC } from 'react'
+import { useRef, useState } from 'react'
 import isHexColor from 'validator/es/lib/isHexColor'
-import isRgbColor from 'validator/es/lib/isRgbColor'
+import { create } from 'zustand'
 
 import * as Label from '@radix-ui/react-label'
 
 import { Input } from '~/lib/components/ui/Input'
-import { transforms as colorTransformers, hexToRgb } from '~/lib/utils/color'
+import type { ColorPalette } from '~/lib/utils/color'
+import { transforms as colorTransformers } from '~/lib/utils/color'
 
-const colorPalettes = ['hex', 'rgb'] as const
-type ColorPalette = (typeof colorPalettes)[number]
+const colorPalettes = ['hex', 'rgb', 'hsl'] as const
+
+const defaultColorVariantMap = {
+  hex: '#39C5BB',
+  rgb: 'rgb(57, 197, 187)',
+  hsl: 'hsl(174, 57%, 51%)',
+}
 
 function camelCase(str: string) {
   return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase())
@@ -18,84 +25,73 @@ function camelCase(str: string) {
 
 const colorTransform = <T extends ColorPalette>(key: T, val: string) => {
   const needTransfrom = colorPalettes.filter((item) => item !== key) as any
-  console.log(needTransfrom)
-  return needTransfrom.reduce((acc, cur: string) => {
-    console.log(camelCase(`${key}-to-${cur}`))
 
-    acc[cur] = colorTransformers[camelCase(`${key}-to-${cur}`)]?.(val)
+  return needTransfrom.reduce((acc: any, cur: string) => {
+    let nextValue = val
+    if (key !== 'rgb') {
+      // @ts-ignore
+      nextValue = colorTransformers[camelCase(`${key}-to-rgb`)]?.(val)
+    }
+
+    // @ts-ignore
+    acc[cur] = colorTransformers[camelCase(`rgb-to-${cur}`)]?.(nextValue)
     return acc
   }, {} as Record<ColorPalette, string>)
 }
 
+const useColorsStore = create(() => {
+  return { ...defaultColorVariantMap } as Record<ColorPalette, string> & {}
+})
+
 export default () => {
-  const defaultHex = '39C5BB'
-  const [hex, setHex] = useState('')
-  const [rgb, setRgb] = useState('')
-
-  const [errorMessage, setErrorMessage] = useState('')
-
-  const setValueMap = {
-    setHex,
-    setRgb,
-  }
-
-  const transform = <T extends ColorPalette>(key: T, val: string) => {
-    const map = colorTransform(key, val)
-    Object.entries(map).forEach(([k, v]) => {
-      setValueMap[camelCase(`set-${k}`)](v)
-    })
-  }
-
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label.Root htmlFor="Hex">Hex Color</Label.Root>
-        <Input
-          placeholder="#39C5BB"
-          className="mt-4 inline-block w-[300px]"
-          type="text"
-          id="Hex"
-          defaultValue="#39C5BB"
-          value={hex}
-          onChange={(e) => {
-            const value = e.target.value
-            if (!isHexColor(value)) {
-              setErrorMessage('Invalid hex color')
-            } else {
-              setErrorMessage('')
-              transform('hex', e.target.value)
-            }
-            setHex(e.target.value)
-          }}
-        />
-        {errorMessage && (
-          <p className="text-sm text-muted-foreground">{errorMessage}</p>
-        )}
-      </div>
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label.Root htmlFor="Hex">RGB Color</Label.Root>
-        <Input
-          placeholder={hexToRgb(defaultHex)}
-          className="mt-4 inline-block w-[300px]"
-          type="text"
-          id="Hex"
-          defaultValue={hexToRgb(defaultHex)}
-          value={rgb}
-          onChange={(e) => {
-            const value = e.target.value
-            if (!isRgbColor(`rgb(${value})`)) {
-              setErrorMessage('Invalid rgb color')
-            } else {
-              setErrorMessage('')
-              transform('rgb', e.target.value)
-            }
-            setRgb(e.target.value)
-          }}
-        />
-        {errorMessage && (
-          <p className="text-sm text-muted-foreground">{errorMessage}</p>
-        )}
-      </div>
+      <ColorInput type="hex" validator={isHexColor} />
+      <ColorInput type="rgb" validator={(v) => v} />
+      <ColorInput type="hsl" validator={(v) => v} />
+    </div>
+  )
+}
+
+const colorsUpdateBatch = (type: ColorPalette, value: string) => {
+  const map = colorTransform(type, value)
+  Object.entries(map).forEach(([k, v]) => {
+    useColorsStore.setState({ [k]: v })
+  })
+}
+
+const ColorInput: FC<{
+  type: ColorPalette
+  validator: (val: string) => boolean
+}> = (props) => {
+  const { type, validator } = props
+  const value = useColorsStore((state) => state[type])
+  const [errorMessage, setErrorMessage] = useState('')
+  const ref = useRef<HTMLInputElement>(null)
+  return (
+    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+      <Label.Root htmlFor="Hex">{type.toUpperCase()} Color</Label.Root>
+      <Input
+        placeholder={defaultColorVariantMap[type]}
+        className="mt-4 inline-block w-[300px]"
+        type="text"
+        id={type}
+        value={value}
+        ref={ref}
+        onKeyDown={() => {
+          if (!ref.current) {
+            return
+          }
+          const value = ref.current.value
+          if (!validator(value)) {
+            setErrorMessage('Invalid hex color')
+          } else {
+            setErrorMessage('')
+            colorsUpdateBatch(type, value)
+          }
+        }}
+      />
+      <p className="text-sm text-muted-foreground h-4">{errorMessage}</p>
     </div>
   )
 }

@@ -21,7 +21,7 @@ export default function ToolLayout({
     <div>
       <aside className="w-[250px] border-r border-gray-300 h-full overflow-auto p-4 flex flex-col fixed left-0 top-0 bg-muted">
         <div className="relative flex justify-between flex-wrap items-center">
-          <h1 className="font-light text-lg font-mono">FeTools</h1>
+          <h1 className="font-light text-lg font-mono">FE Tools</h1>
           <a
             href={repository.url}
             className="inline-flex items-center flex-shrink-0 ml-4 text-black"

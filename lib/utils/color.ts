@@ -80,15 +80,107 @@ export const hexToHSL = (hex: string) => {
   return hsl.join(', ')
 }
 
-const colorPalettes = ['hex', 'rgb'] as const
+export type ColorPalette = 'hex' | 'rgb' | 'hsl'
 
-type ITransforms = {
-  [key in (typeof colorPalettes)[number] as `${key}To${Capitalize<
-    Exclude<(typeof colorPalettes)[number], key>
-  >}`]: (value: string) => string
+// type ITransforms = {
+//   [key in ColorPalette as `${Exclude<ColorPalette, 'rgb'>}ToRgb`]: (
+//     value: string,
+//   ) => string
+
+//   [key in ColorPalette as `rgbTo${Exclude<ColorPalette, 'rgb'>}`]: (
+//     value: string,
+//   ) => string
+// }
+function hslToRgb(hsl: string): string {
+  // Parse the HSL value into its components
+  const [hue, saturation, lightness] = hsl.split(',').map(parseFloat)
+
+  // Convert hue, saturation, and lightness to values between 0 and 1
+  const h = hue / 360
+  const s = saturation / 100
+  const l = lightness / 100
+
+  // Calculate intermediate values
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s
+  const p = 2 * l - q
+
+  // Helper function to calculate RGB components
+  const calcRgb = (t: number) => {
+    if (t < 0) t += 1
+    if (t > 1) t -= 1
+    if (t < 1 / 6) return p + (q - p) * 6 * t
+    if (t < 1 / 2) return q
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
+    return p
+  }
+
+  // Calculate RGB components
+  const red = Math.round(calcRgb(h + 1 / 3) * 255)
+  const green = Math.round(calcRgb(h) * 255)
+  const blue = Math.round(calcRgb(h - 1 / 3) * 255)
+
+  // Return the RGB color value as a string
+  return `${red}, ${green}, ${blue}`
 }
 
-export const transforms: ITransforms = {
+function rgbToHsl(rgb: string): string {
+  // Parse the RGB value into its components
+  const [red, green, blue] = rgb
+    .replace(/[^\d,]/g, '') // Remove non-digit and non-comma characters
+    .split(',') // Split by comma
+    .map(parseFloat) // Convert to numbers
+
+  // Convert RGB values to values between 0 and 1
+  const r = red / 255
+  const g = green / 255
+  const b = blue / 255
+
+  // Find the maximum and minimum values among R, G, B
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+
+  // Calculate the difference between max and min
+  const delta = max - min
+
+  // Calculate the lightness (L)
+  const l = (max + min) / 2
+
+  // Calculate the saturation (S)
+  const s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1))
+
+  // Calculate the hue (H)
+  let h = 0
+  if (delta !== 0) {
+    switch (max) {
+      case r:
+        h = ((g - b) / delta) % 6
+        break
+      case g:
+        h = (b - r) / delta + 2
+        break
+      case b:
+        h = (r - g) / delta + 4
+        break
+      default:
+        break
+    }
+  }
+  h = Math.round(h * 60) // Convert hue to degrees
+
+  // Make sure hue is within the range of 0 to 360
+  if (h < 0) {
+    h += 360
+  }
+
+  // Return the HSL color value as a string
+  return `${h}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%`
+}
+
+export const rgbToRgb = (rgb: string) => rgb
+export const transforms = {
   hexToRgb,
+  hslToRgb,
+  rgbToRgb,
   rgbToHex,
+  rgbToHsl,
 }
