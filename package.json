@@ -41,7 +41,7 @@
     "@types/react-dom": "18.0.11",
     "@vercel/analytics": "1.0.0",
     "camelcase-keys": "8.0.2",
-    "class-variance-authority": "0.5.2",
+    "class-variance-authority": "0.5.3",
     "clsx": "1.2.1",
     "detect-indent": "7.0.1",
     "eslint": "8.39.0",
