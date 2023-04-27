@@ -28,17 +28,13 @@ export function hexToRgb(hex: string) {
 
 // hope this rgbColor or rgbaColor
 export const rgbToHex = (rgb: string) => {
-  // const rgbColor = /^rgb\((([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]),){2}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\)$/;
-  // const rgbaColor = /^rgba\((([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]),){3}(0?\.\d|1(\.0)?|0(\.0)?)\)$/;
-  // const rgbColorPercent = /^rgb\((([0-9]%|[1-9][0-9]%|100%),){2}([0-9]%|[1-9][0-9]%|100%)\)$/;
-  // const rgbaColorPercent = /^rgba\((([0-9]%|[1-9][0-9]%|100%),){3}(0?\.\d|1(\.0)?|0(\.0)?)\)$/;
   const rgbArray = rgb.replace('rgb(', '').replace(')', '').split(',')
 
-  const r = parseInt(rgbArray[0], 10).toString(16)
-  const g = parseInt(rgbArray[1], 10).toString(16)
-  const b = parseInt(rgbArray[2], 10).toString(16)
+  const r = parseInt(rgbArray[0], 10)
+  const g = parseInt(rgbArray[1], 10)
+  const b = parseInt(rgbArray[2], 10)
 
-  return `#${r}${g}${b}`.toUpperCase()
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`
 }
 
 export const hexToHSL = (hex: string) => {
@@ -198,12 +194,12 @@ export const transforms = {
 export const colorValidator = {
   isRgb: (value: string) => {
     const colorRegex =
-      /^(rgb(a)?\(\d{1,3},\s*\d{1,3},\s*\d{1,3}(,\s*\d{1,3})?\))|#([a-fA-F0-9]{3}|[a-fA-F0-9]{6})$/
+      /^((rgb(a)?)?\(?\d{1,3},\s*\d{1,3},\s*\d{1,3}(,\s*\d{1,3})?\)?)$/
     return colorRegex.test(value)
   },
   isHSL(value: string) {
     const hslRegex =
-      /^(hsl)?\(\s*(\d{1,3}|[0-9]*\.[0-9]+),\s*(\d{1,3}%)\s*,\s*(\d{1,3}%)\s*\)$/
+      /^(hsl)?\(?\s*(\d{1,3}|[0-9]*\.[0-9]+),\s*(\d{1,3}%)\s*,\s*(\d{1,3}%)\s*\)?$/
     return hslRegex.test(value)
   },
 }

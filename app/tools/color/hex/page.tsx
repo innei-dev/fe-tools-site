@@ -1,7 +1,8 @@
 'use client'
 
-import type { FC } from 'react'
+import type { FC, MouseEventHandler } from 'react'
 import { useEffect, useRef, useState } from 'react'
+import { message } from 'react-message-popup'
 import isHexColor from 'validator/es/lib/isHexColor'
 import { create } from 'zustand'
 
@@ -48,16 +49,39 @@ const useColorsStore = create(() => {
 
 export default () => {
   return (
-    <div className="flex flex-col gap-4">
-      <ColorInput type="hex" validator={isHexColor} />
-      <ColorInput type="rgb" validator={colorValidator.isRgb} />
-      <ColorInput type="hsl" validator={colorValidator.isHSL} />
+    <div className="flex flex-col gap-4 p-6">
+      <ColorInput
+        type="hex"
+        validator={isHexColor}
+        color1Transform={(val) => (val[0] !== '#' ? `#${val}` : val)}
+        color2Transform={(val) => (val[0] === '#' ? val.slice(1) : val)}
+      />
+      <ColorInput
+        type="rgb"
+        validator={colorValidator.isRgb}
+        color1Transform={(val) =>
+          !val.toLowerCase().startsWith('rgb') ? `rgb(${val})` : val
+        }
+        color2Transform={(val) => val.replace(/rgb\((.*)\)/, '$1')}
+      />
+      <ColorInput
+        type="hsl"
+        validator={colorValidator.isHSL}
+        color1Transform={(val) =>
+          !val.toLowerCase().startsWith('hsl') ? `hsl(${val})` : val
+        }
+        color2Transform={(val) => {
+          const [h, s, l] = val.replace(/hsl\((.*)\)/, '$1').split(',')
+          return `${h}° ${s} ${l}`
+        }}
+      />
     </div>
   )
 }
 
 const colorsUpdateBatch = (type: ColorPalette, value: string) => {
   const map = colorTransform(type, value)
+
   Object.entries(map).forEach(([k, v]) => {
     useColorsStore.setState({ [k]: v })
   })
@@ -78,6 +102,7 @@ const ColorInput: FC<{
 }> = (props) => {
   const { type, validator, color1Transform, color2Transform } = props
   const value = useColorsStore((state) => state[type])
+
   const [errorMessage, setErrorMessage] = useState('')
   const ref = useRef<HTMLInputElement>(null)
 
@@ -87,8 +112,16 @@ const ColorInput: FC<{
     }
   }, [value])
 
+  const copyValue: MouseEventHandler<HTMLDivElement> = (e) => {
+    const $el = e.target as HTMLButtonElement
+    const value = $el.innerText
+
+    message.info(`Copied, ${value}`)
+    navigator.clipboard.writeText(value)
+  }
+
   return (
-    <div className="grid w-full max-w-2xl items-center gap-1.5">
+    <div className="grid w-full max-w-3xl items-center gap-1.5">
       <Label.Root htmlFor="Hex">{type.toUpperCase()} Color</Label.Root>
       <div className="grid gap-4 grid-cols-2 [&>*]:flex [&>*]:items-center [&>*]:relative">
         <div className="flex flex-col">
@@ -108,22 +141,31 @@ const ColorInput: FC<{
               }
               useColorsStore.setState({ [type]: value })
             }}
-            onKeyDown={() => {
+            onKeyUp={() => {
               if (!errorMessage) {
-                colorsUpdateBatch(type, ref.current?.value || '')
+                colorsUpdateBatch(type, value)
               }
             }}
           />
         </div>
 
         <div className="items-center">
-          <div>{color1Transform && <div> {color1Transform(value)}</div>}</div>
-          <div>{color2Transform && <div> {color2Transform(value)}</div>}</div>
-
           <div
-            style={{ backgroundColor: value }}
-            className="rounded-full h-4 w-4"
+            style={{
+              backgroundColor: color1Transform ? color1Transform(value) : value,
+            }}
+            className="rounded-full h-4 w-4 border border-black border-opacity-80"
           />
+
+          {!errorMessage && (
+            <div
+              className="ml-4 grid grid-cols-2 gap-2 flex-1 [&>*]:text-left"
+              onClick={copyValue}
+            >
+              <button>{color1Transform && color1Transform(value)}</button>
+              <button>{color2Transform && color2Transform(value)}</button>
+            </div>
+          )}
         </div>
       </div>
 
