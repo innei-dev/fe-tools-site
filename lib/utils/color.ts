@@ -92,6 +92,8 @@ export type ColorPalette = 'hex' | 'rgb' | 'hsl'
 //   ) => string
 // }
 function hslToRgb(hsl: string): string {
+  hsl = hsl.toLowerCase()
+  hsl = hsl.replace('hsl(', '')
   // Parse the HSL value into its components
   const [hue, saturation, lightness] = hsl.split(',').map(parseFloat)
 
@@ -173,14 +175,35 @@ function rgbToHsl(rgb: string): string {
   }
 
   // Return the HSL color value as a string
-  return `${h}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%`
+  return `hsl(${h}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`
 }
 
-export const rgbToRgb = (rgb: string) => rgb
+export const rgbToRgb = (rgb: string) => {
+  let nextValue = rgb.toLowerCase()
+  if (!nextValue.startsWith('rgb')) {
+    const bitCount = nextValue.split(',').length
+    const prefix = bitCount === 3 ? 'rgb' : 'rgba'
+    nextValue = `${prefix}(${nextValue})`
+  }
+  return nextValue
+}
 export const transforms = {
   hexToRgb,
   hslToRgb,
   rgbToRgb,
   rgbToHex,
   rgbToHsl,
+}
+
+export const colorValidator = {
+  isRgb: (value: string) => {
+    const colorRegex =
+      /^(rgb(a)?\(\d{1,3},\s*\d{1,3},\s*\d{1,3}(,\s*\d{1,3})?\))|#([a-fA-F0-9]{3}|[a-fA-F0-9]{6})$/
+    return colorRegex.test(value)
+  },
+  isHSL(value: string) {
+    const hslRegex =
+      /^(hsl)?\(\s*(\d{1,3}|[0-9]*\.[0-9]+),\s*(\d{1,3}%)\s*,\s*(\d{1,3}%)\s*\)$/
+    return hslRegex.test(value)
+  },
 }

@@ -9,7 +9,10 @@ import * as Label from '@radix-ui/react-label'
 
 import { Input } from '~/lib/components/ui/Input'
 import type { ColorPalette } from '~/lib/utils/color'
-import { transforms as colorTransformers } from '~/lib/utils/color'
+import {
+  transforms as colorTransformers,
+  colorValidator,
+} from '~/lib/utils/color'
 
 const colorPalettes = ['hex', 'rgb', 'hsl'] as const
 
@@ -47,8 +50,8 @@ export default () => {
   return (
     <div className="flex flex-col gap-4">
       <ColorInput type="hex" validator={isHexColor} />
-      <ColorInput type="rgb" validator={(v) => v} />
-      <ColorInput type="hsl" validator={(v) => v} />
+      <ColorInput type="rgb" validator={colorValidator.isRgb} />
+      <ColorInput type="hsl" validator={colorValidator.isHSL} />
     </div>
   )
 }
@@ -69,8 +72,11 @@ const resetColors = () => {
 const ColorInput: FC<{
   type: ColorPalette
   validator: (val: string) => boolean
+
+  color1Transform?: (val: string) => string
+  color2Transform?: (val: string) => string
 }> = (props) => {
-  const { type, validator } = props
+  const { type, validator, color1Transform, color2Transform } = props
   const value = useColorsStore((state) => state[type])
   const [errorMessage, setErrorMessage] = useState('')
   const ref = useRef<HTMLInputElement>(null)
@@ -82,30 +88,45 @@ const ColorInput: FC<{
   }, [value])
 
   return (
-    <div className="grid w-full max-w-sm items-center gap-1.5">
+    <div className="grid w-full max-w-2xl items-center gap-1.5">
       <Label.Root htmlFor="Hex">{type.toUpperCase()} Color</Label.Root>
-      <Input
-        placeholder={defaultColorVariantMap[type]}
-        className="inline-block w-[300px]"
-        type="text"
-        id={type}
-        value={value}
-        ref={ref}
-        onChange={(e) => {
-          const value = e.target.value
-          if (!validator(value)) {
-            setErrorMessage('Invalid hex color')
-          } else {
-            setErrorMessage('')
-          }
-          useColorsStore.setState({ [type]: value })
-        }}
-        onKeyDown={() => {
-          if (!errorMessage) {
-            colorsUpdateBatch(type, ref.current?.value || '')
-          }
-        }}
-      />
+      <div className="grid gap-4 grid-cols-2 [&>*]:flex [&>*]:items-center [&>*]:relative">
+        <div className="flex flex-col">
+          <Input
+            placeholder={defaultColorVariantMap[type]}
+            className="inline-block w-[300px]"
+            type="text"
+            id={type}
+            value={value}
+            ref={ref}
+            onChange={(e) => {
+              const value = e.target.value
+              if (!validator(value)) {
+                setErrorMessage(`Invalid ${type} color`)
+              } else {
+                setErrorMessage('')
+              }
+              useColorsStore.setState({ [type]: value })
+            }}
+            onKeyDown={() => {
+              if (!errorMessage) {
+                colorsUpdateBatch(type, ref.current?.value || '')
+              }
+            }}
+          />
+        </div>
+
+        <div className="items-center">
+          <div>{color1Transform && <div> {color1Transform(value)}</div>}</div>
+          <div>{color2Transform && <div> {color2Transform(value)}</div>}</div>
+
+          <div
+            style={{ backgroundColor: value }}
+            className="rounded-full h-4 w-4"
+          />
+        </div>
+      </div>
+
       <p className="text-sm text-muted-foreground h-4">{errorMessage}</p>
     </div>
   )
