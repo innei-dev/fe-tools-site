@@ -1,7 +1,7 @@
 'use client'
 
 import type { FC } from 'react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import isHexColor from 'validator/es/lib/isHexColor'
 import { create } from 'zustand'
 
@@ -45,7 +45,7 @@ const useColorsStore = create(() => {
 
 export default () => {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4">
       <ColorInput type="hex" validator={isHexColor} />
       <ColorInput type="rgb" validator={(v) => v} />
       <ColorInput type="hsl" validator={(v) => v} />
@@ -60,6 +60,12 @@ const colorsUpdateBatch = (type: ColorPalette, value: string) => {
   })
 }
 
+const resetColors = () => {
+  colorPalettes.forEach((item) => {
+    useColorsStore.setState({ [item]: '' })
+  })
+}
+
 const ColorInput: FC<{
   type: ColorPalette
   validator: (val: string) => boolean
@@ -68,26 +74,35 @@ const ColorInput: FC<{
   const value = useColorsStore((state) => state[type])
   const [errorMessage, setErrorMessage] = useState('')
   const ref = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (!value) {
+      resetColors()
+    }
+  }, [value])
+
   return (
-    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+    <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label.Root htmlFor="Hex">{type.toUpperCase()} Color</Label.Root>
       <Input
         placeholder={defaultColorVariantMap[type]}
-        className="mt-4 inline-block w-[300px]"
+        className="inline-block w-[300px]"
         type="text"
         id={type}
         value={value}
         ref={ref}
-        onKeyDown={() => {
-          if (!ref.current) {
-            return
-          }
-          const value = ref.current.value
+        onChange={(e) => {
+          const value = e.target.value
           if (!validator(value)) {
             setErrorMessage('Invalid hex color')
           } else {
             setErrorMessage('')
-            colorsUpdateBatch(type, value)
+          }
+          useColorsStore.setState({ [type]: value })
+        }}
+        onKeyDown={() => {
+          if (!errorMessage) {
+            colorsUpdateBatch(type, ref.current?.value || '')
           }
         }}
       />

@@ -38,7 +38,7 @@ export const rgbToHex = (rgb: string) => {
   const g = parseInt(rgbArray[1], 10).toString(16)
   const b = parseInt(rgbArray[2], 10).toString(16)
 
-  return `#${r}${g}${b}`
+  return `#${r}${g}${b}`.toUpperCase()
 }
 
 export const hexToHSL = (hex: string) => {
