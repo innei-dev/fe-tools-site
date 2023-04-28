@@ -29,8 +29,8 @@ dependencies:
     specifier: 1.4.1
     version: 1.4.1
   '@iconify-json/mingcute':
-    specifier: 1.1.5
-    version: 1.1.5
+    specifier: 1.1.6
+    version: 1.1.6
   '@lezer/highlight':
     specifier: '*'
     version: 1.1.4
@@ -898,8 +898,8 @@ packages:
       - supports-color
     dev: true
 
-  /@iconify-json/mingcute@1.1.5:
-    resolution: {integrity: sha512-k2CaSPbi3YXvV2O0U+PLPJzjLF+5WqcqTGc1apEle06tj5GPqAwRjCpaZsHjWo8jYhnmi6YyjXJmS/VX+5Kx9g==}
+  /@iconify-json/mingcute@1.1.6:
+    resolution: {integrity: sha512-fkwDIZo7AGv3hZukPNUxCP+y0ZsZszuc7ZP5OPrLcZEQ4UF1rhhhitJUKtHr7Jb4zlZGdhWQUB/j6baXQsgjfQ==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: false
