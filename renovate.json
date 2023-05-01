@@ -1,15 +1,14 @@
 {
-  "extends": [
-    "config:base",
-    ":automergePatch",
-    ":automergeTesters",
-    ":automergeLinters",
-    ":rebaseStalePrs"
-  ],
+  "extends": ["config:base", "schedule:weekly", "group:allNonMajor"],
+  "labels": ["dependencies"],
+  "pin": false,
+  "rangeStrategy": "bump",
+  "node": false,
   "packageRules": [
     {
-      "updateTypes": ["major"],
-      "labels": ["UPDATE-MAJOR"]
+      "depTypeList": ["peerDependencies"],
+      "enabled": false
     }
-  ]
+  ],
+  "ignoreDeps": ["node"]
 }
