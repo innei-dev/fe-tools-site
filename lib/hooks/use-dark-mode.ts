@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { create } from 'zustand'
 
+import { getCookie, removeCookie, setCookie } from '~/lib/utils/cookie'
+
+import { darkModeKey } from '../constants/ui'
 import { useGetState } from './use-get-state'
-import { getStorage, delStorage, setStorage } from '~/lib/utils/storage'
 
 interface IMediaStore {
   isDark: boolean
@@ -24,7 +26,7 @@ interface DarkModeConfig {
   element?: HTMLElement | undefined | null // The element to apply the className. Default = `document.body`.
   storageKey?: string // Specify the `localStorage` key. Default = "darkMode". set to `undefined` to disable persistent storage.
 }
-const darkModeKey = 'darkMode'
+
 const useDarkModeInternal = (
   initialState: boolean | undefined,
   options: DarkModeConfig,
@@ -39,11 +41,8 @@ const useDarkModeInternal = (
   const [darkMode, setDarkMode] = useState(initialState)
 
   useEffect(() => {
-    const presentedDarkMode = storageKey
-      ? isServerSide()
-        ? undefined
-        : getStorage(storageKey)
-      : undefined
+    if (isServerSide()) return
+    const presentedDarkMode = getCookie(storageKey)
 
     if (presentedDarkMode !== undefined) {
       if (presentedDarkMode === 'true') {
@@ -51,45 +50,32 @@ const useDarkModeInternal = (
       } else if (presentedDarkMode === 'false') {
         setDarkMode(false)
       }
-    } else if (typeof initialState === 'undefined') {
+    } else if (
+      typeof initialState === 'undefined' &&
+      (!element?.classList.contains(classNameDark) ||
+        !element?.classList.contains(classNameLight))
+    ) {
       setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches)
     }
   }, [storageKey])
 
   useEffect(() => {
     const handler = (e: MediaQueryListEvent) => {
-      const storageValue = getStorage(storageKey)
+      const storageValue = getCookie(storageKey)
       const parseStorageValueAsBool = storageValue === 'true'
       setDarkMode(e.matches)
 
       // reset dark mode, follow system
       if (parseStorageValueAsBool === e.matches) {
-        delStorage(storageKey)
+        removeCookie(storageKey)
       }
     }
 
-    const storageHandler = () => {
-      const storageValue = getStorage(storageKey, true)
-      // if not storage color mode, switch to follow system
-      if (storageValue === undefined) {
-        setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches)
-      } else {
-        // make multiple pages to switch to dark mode together.
-        if (storageValue === 'true') {
-          setDarkMode(true)
-        } else if (storageValue === 'false') {
-          setDarkMode(false)
-        }
-      }
-    }
-
-    window.addEventListener('storage', storageHandler)
     window
       .matchMedia('(prefers-color-scheme: dark)')
       .addEventListener('change', handler)
 
     return () => {
-      window.removeEventListener('storage', storageHandler)
       window
         .matchMedia('(prefers-color-scheme: dark)')
         .removeEventListener('change', handler)
@@ -104,7 +90,7 @@ const useDarkModeInternal = (
         window.matchMedia('(prefers-color-scheme: dark)').matches ===
         getDarkMode()
       ) {
-        delStorage(darkModeKey)
+        removeCookie(darkModeKey)
       }
     }
     window.addEventListener('beforeunload', handler)
@@ -141,7 +127,7 @@ const useDarkModeInternal = (
     toggle: () => {
       setDarkMode((d) => {
         if (storageKey && !isServerSide()) {
-          setStorage(storageKey, String(!d))
+          setCookie(storageKey, !d)
         }
 
         return !d
@@ -160,7 +146,7 @@ const mockElement = {
 }
 
 export const useDarkMode = () => {
-  const { toggle, value } = useDarkModeInternal(getStorage(darkModeKey), {
+  const { toggle, value } = useDarkModeInternal(getCookie(darkModeKey), {
     classNameDark: 'dark',
     classNameLight: 'light',
     storageKey: darkModeKey,

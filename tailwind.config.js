@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const { addDynamicIconSelectors } = require('@iconify/tailwind')
+
 module.exports = {
   darkMode: ['class'],
   content: ['./lib/**/*.{ts,tsx}', './app/**/*.{ts,tsx}'],
@@ -11,6 +14,7 @@ module.exports = {
         '2xl': '1400px',
       },
     },
+
     extend: {
       colors: {
         border: 'hsl(var(--border))',
@@ -68,5 +72,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), addDynamicIconSelectors()],
 }

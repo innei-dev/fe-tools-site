@@ -28,8 +28,8 @@ export const sidebarConfig = [
     path: '/tools/color',
     children: [
       {
-        title: 'From Hex',
-        path: '/hex',
+        title: 'Transform',
+        path: '/transform',
       },
     ],
   },

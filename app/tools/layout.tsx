@@ -7,14 +7,14 @@ import { useDarkMode } from '~/lib/hooks/use-dark-mode'
 import { cn } from '~/lib/utils'
 
 import { repository } from '../../package.json'
-import { sidebarConfig } from './routes'
+import { sidebarConfig } from './configs'
 
 export default function ToolLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  useDarkMode()
+  const { value: isDark, toggle } = useDarkMode()
   const pathname = usePathname()
 
   return (
@@ -22,13 +22,29 @@ export default function ToolLayout({
       <aside className="w-[250px] border-r border-gray-300 h-full overflow-auto p-4 flex flex-col fixed left-0 top-0 bg-muted">
         <div className="relative flex justify-between flex-wrap items-center">
           <h1 className="font-light text-lg font-mono">FE Tools</h1>
-          <a
-            href={repository.url}
-            className="inline-flex items-center flex-shrink-0 ml-4 text-black"
-            target="_blank"
-          >
-            <i className="i-mingcute:github-line inline-block" />
-          </a>
+
+          <span className="space-x-2">
+            <button className="inline-block" onClick={toggle}>
+              {isDark ? (
+                <i
+                  className="icon-[mingcute--moon-line] inline-block"
+                  suppressHydrationWarning
+                />
+              ) : (
+                <i
+                  className="icon-[mingcute--sun-line] inline-block"
+                  suppressHydrationWarning
+                />
+              )}
+            </button>
+            <a
+              href={repository.url}
+              className="inline-flex items-center flex-shrink-0 ml-4 text-black"
+              target="_blank"
+            >
+              <i className="icon-[mingcute--github-line] inline-block" />
+            </a>
+          </span>
         </div>
 
         {sidebarConfig.map((config) => (

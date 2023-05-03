@@ -1,19 +1,15 @@
 'use client'
 
+import { camelCase } from 'lodash-es'
 import type { FC, MouseEventHandler } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { message } from 'react-message-popup'
-import isHexColor from 'validator/es/lib/isHexColor'
 import { create } from 'zustand'
 
 import * as Label from '@radix-ui/react-label'
 
 import { Input } from '~/lib/components/ui/Input'
 import type { ColorPalette } from '~/lib/utils/color'
-import {
-  transforms as colorTransformers,
-  colorValidator,
-} from '~/lib/utils/color'
 
 const colorPalettes = ['hex', 'rgb', 'hsl'] as const
 
@@ -21,10 +17,6 @@ const defaultColorVariantMap = {
   hex: '#39C5BB',
   rgb: 'rgb(57, 197, 187)',
   hsl: 'hsl(174, 57%, 51%)',
-}
-
-function camelCase(str: string) {
-  return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase())
 }
 
 const colorTransform = <T extends ColorPalette>(key: T, val: string) => {
@@ -47,38 +39,6 @@ const useColorsStore = create(() => {
   return { ...defaultColorVariantMap } as Record<ColorPalette, string> & {}
 })
 
-export default () => {
-  return (
-    <div className="flex flex-col gap-4 p-6">
-      <ColorInput
-        type="hex"
-        validator={isHexColor}
-        color1Transform={(val) => (val[0] !== '#' ? `#${val}` : val)}
-        color2Transform={(val) => (val[0] === '#' ? val.slice(1) : val)}
-      />
-      <ColorInput
-        type="rgb"
-        validator={colorValidator.isRgb}
-        color1Transform={(val) =>
-          !val.toLowerCase().startsWith('rgb') ? `rgb(${val})` : val
-        }
-        color2Transform={(val) => val.replace(/rgb\((.*)\)/, '$1')}
-      />
-      <ColorInput
-        type="hsl"
-        validator={colorValidator.isHSL}
-        color1Transform={(val) =>
-          !val.toLowerCase().startsWith('hsl') ? `hsl(${val})` : val
-        }
-        color2Transform={(val) => {
-          const [h, s, l] = val.replace(/hsl\((.*)\)/, '$1').split(',')
-          return `${h}° ${s} ${l}`
-        }}
-      />
-    </div>
-  )
-}
-
 const colorsUpdateBatch = (type: ColorPalette, value: string) => {
   const map = colorTransform(type, value)
 
@@ -93,7 +53,7 @@ const resetColors = () => {
   })
 }
 
-const ColorInput: FC<{
+export const ColorInput: FC<{
   type: ColorPalette
   validator: (val: string) => boolean
 
