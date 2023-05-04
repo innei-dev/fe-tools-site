@@ -71,7 +71,7 @@ useColorStore.subscribe((state, prevState) => {
       !val.toLowerCase().startsWith('hsl') ? `hsl(${val})` : val)(state.hsl)
     const short = ((val) => {
       const [h, s, l] = val.replace(/hsl\((.*)\)/, '$1').split(',')
-      return `${h}deg, ${s}, ${l}`
+      return `${h.endsWith('deg') ? h : `${h}deg`}, ${s}, ${l}`
     })(state.hsl)
     setState({
       hslFull: full,

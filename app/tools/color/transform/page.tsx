@@ -30,14 +30,20 @@ const useColorValueParser = (
   | [number, string, number, number, number, (num: number) => string]
   | undefined => {
   if (val.endsWith('deg')) {
-    return [+val.slice(0, -3), 'deg', 0, 360, 0.01, (num: number) => `${num}`]
+    return [
+      +val.slice(0, -3),
+      'deg',
+      0,
+      360,
+      0.01,
+      (num: number) => `${num}deg`,
+    ]
   }
-  if (parseInt(val).toString() === val) {
-    return [+val, '', 0, 255, 1, (num: number) => `${num}`]
-  }
+
   if (val.endsWith('%')) {
-    return [+val.slice(0, -1), '%', 0, 100, 0.01, (num: number) => `${num}`]
+    return [+val.slice(0, -1), '%', 0, 100, 0.01, (num: number) => `${num}%`]
   }
+  return [+val, '', 0, 255, 1, (num: number) => `${num}`]
 }
 const ColorSliders: FC = () => {
   const type = useColorStore((state) => state.adjustType)
@@ -59,8 +65,6 @@ const ColorSliders: FC = () => {
     if (type && defereredValue) colorsUpdateBatch(type, defereredValue)
   }, [defereredValue, type])
 
-  console.log(x, y, z, currentColor)
-
   return (
     <>
       {type && type !== 'hex' && (
@@ -72,11 +76,6 @@ const ColorSliders: FC = () => {
           <ColorSlider
             value={x}
             onUpdate={(colorWithUnit) => {
-              console.log(
-                colorWithUnit.length,
-                `${type}(${[colorWithUnit, y, z].join(', ')})`,
-                'x',
-              )
               useColorStore.setState({
                 [type]: `${type}(${[colorWithUnit, y, z].join(', ')})`,
               })
@@ -111,15 +110,17 @@ const ColorSlider: FC<{
   const { value } = props
   const [numberValue, , min, max, step, transformer] =
     useColorValueParser(value) || []
-
+  const currentColor = useColorStore((state) => state.hex)
   if (typeof numberValue === 'undefined') return null
   return (
     <Slider
+      style={{
+        backgroundColor: currentColor,
+      }}
       max={max}
       min={min}
       step={step}
-      data-value={JSON.stringify({ numberValue, min, max })}
-      defaultValue={[numberValue]}
+      value={[numberValue]}
       onValueChange={(val) => {
         const [value] = val
         if (!transformer) return null

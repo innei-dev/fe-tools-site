@@ -199,7 +199,7 @@ export const colorValidator = {
   },
   isHSL(value: string) {
     const hslRegex =
-      /^(hsl)?\(?\s*(\d{1,3}|[0-9]*\.[0-9]+),\s*(\d{1,3}%)\s*,\s*(\d{1,3}%)\s*\)?$/
+      /^(hsl)?\(?\s*(\d{1,3}|[0-9]*\.[0-9]+)(deg)?,\s*(\d{1,3}%)\s*,\s*(\d{1,3}%)\s*\)?$/
     return hslRegex.test(value)
   },
 }

@@ -50,9 +50,9 @@ export const ColorInput: FC<{
   }
 
   return (
-    <div className="grid w-full max-w-3xl items-center gap-1.5">
+    <div className="grid w-full max-w-4xl items-center gap-1.5">
       <Label.Root htmlFor="Hex">{type.toUpperCase()} Color</Label.Root>
-      <div className="grid gap-4 grid-cols-2 [&>*]:flex [&>*]:relative">
+      <div className="grid gap-4 grid-cols-[1fr_2fr] [&>*]:flex [&>*]:relative">
         <div className="flex flex-col">
           <Input
             placeholder={defaultColorVariantMap[type]}
