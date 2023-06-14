@@ -31,6 +31,10 @@ export const sidebarConfig = [
         title: 'Transform',
         path: '/transform',
       },
+      {
+        title: 'Brightness',
+        path: '/brightness',
+      },
     ],
   },
 ] satisfies SidebarConfig[]

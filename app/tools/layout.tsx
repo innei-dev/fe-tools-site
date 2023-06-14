@@ -6,9 +6,10 @@ import { usePathname } from 'next/navigation'
 import { useDarkMode } from '~/lib/hooks/use-dark-mode'
 import { cn } from '~/lib/utils'
 
-import { repository } from '../../package.json'
+import PKG from '../../package.json'
 import { sidebarConfig } from './configs'
 
+const { repository } = PKG
 export default function ToolLayout({
   children,
 }: {
@@ -19,9 +20,9 @@ export default function ToolLayout({
 
   return (
     <div>
-      <aside className="w-[250px] border-r border-gray-300 h-full overflow-auto p-4 flex flex-col fixed left-0 top-0 bg-muted">
-        <div className="relative flex justify-between flex-wrap items-center">
-          <h1 className="font-light text-lg font-mono">FE Tools</h1>
+      <aside className="fixed left-0 top-0 flex h-full w-[250px] flex-col overflow-auto border-r border-gray-300 bg-muted p-4">
+        <div className="relative flex flex-wrap items-center justify-between">
+          <h1 className="font-mono text-lg font-light">FE Tools</h1>
 
           <span className="space-x-2">
             <button className="inline-block" onClick={toggle}>
@@ -39,7 +40,7 @@ export default function ToolLayout({
             </button>
             <a
               href={repository.url}
-              className="inline-flex items-center flex-shrink-0 ml-4 text-black"
+              className="ml-4 inline-flex flex-shrink-0 items-center text-black"
               target="_blank"
             >
               <i className="icon-[mingcute--github-line] inline-block" />
@@ -49,7 +50,7 @@ export default function ToolLayout({
 
         {sidebarConfig.map((config) => (
           <section key={config.title}>
-            <p className="font-medium my-4 text-sm text-stone-500">
+            <p className="my-4 text-sm font-medium text-stone-500">
               {config.title}
             </p>
             {config.children.map((child) => {
@@ -59,7 +60,7 @@ export default function ToolLayout({
                 <Link href={jointPath} key={jointPath}>
                   <h2
                     className={cn(
-                      'text-base my-2 transition-colors duration-200 ease-in-out hover:text-accent hover:text-opacity-80',
+                      'my-2 text-base transition-colors duration-200 ease-in-out hover:text-accent hover:text-opacity-80',
                       pathname === jointPath ? 'text-accent' : '',
                     )}
                   >
