@@ -13,8 +13,8 @@ import isHexColor from 'validator/es/lib/isHexColor'
 import { Input } from '~/lib/components/ui/Input'
 import { Slider } from '~/lib/components/ui/Slider'
 
-const inputColorAtom = atom('#000000')
-const brightnessColorAtom = atom('#000000')
+const inputColorAtom = atom('#39C5BB')
+const brightnessColorAtom = atom('#39C5BB')
 
 export default () => {
   return (
@@ -113,9 +113,10 @@ const InputColor = () => {
     </>
   )
 }
-
+let stacked = 0
 const ColorBall = ({ color }: { color: string }) => {
   const [preview, setPreview] = useState(false)
+  const zIndex = ++stacked
   return (
     <>
       <div
@@ -133,12 +134,15 @@ const ColorBall = ({ color }: { color: string }) => {
 
       {preview &&
         createPortal(
-          <div
-            className="fixed bottom-0 right-0 h-[300px] w-[300px] translate-x-1/2 translate-y-1/2 rounded-full"
-            style={{
-              backgroundColor: color,
-            }}
-          />,
+          <div className="fixed bottom-0 right-0 h-[500px] w-[500px] bg-always-white">
+            <div
+              className="absolute bottom-0 right-0 h-[1000px] w-[1000px] translate-x-1/2 translate-y-1/2 rounded-full"
+              style={{
+                backgroundColor: color,
+                zIndex,
+              }}
+            />
+          </div>,
           document.body,
         )}
     </>

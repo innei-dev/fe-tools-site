@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
-const { addDynamicIconSelectors } = require('@iconify/tailwind')
+import twColors from 'tailwindcss/colors'
 
+const { addDynamicIconSelectors } = require('@iconify/tailwind')
 module.exports = {
   darkMode: ['class'],
   content: ['./lib/**/*.{ts,tsx}', './app/**/*.{ts,tsx}'],
@@ -17,6 +18,7 @@ module.exports = {
 
     extend: {
       colors: {
+        always: twColors,
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
