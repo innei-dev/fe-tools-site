@@ -9,7 +9,7 @@ export interface SidebarConfig {
 ;[]
 export const sidebarConfig = [
   {
-    title: 'Modify Object',
+    title: 'Object',
     path: '/tools/object',
     children: [
       {

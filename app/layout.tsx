@@ -1,9 +1,9 @@
 import '../assets/css/globals.css'
 import '../assets/css/tw-vars.css'
 
-import { cookies } from 'next/headers'
-
 import { Analytics } from '@vercel/analytics/react'
+import { cookies } from 'next/headers'
+import type { Metadata } from 'next'
 
 import { darkModeKey } from '~/lib/constants/ui'
 
@@ -13,6 +13,10 @@ const safeParse = (v?: string) => {
   } catch {
     return null
   }
+}
+
+export const metadata: Metadata = {
+  title: 'Fe Tools',
 }
 export default async function RootLayout({
   children,
