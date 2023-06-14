@@ -28,8 +28,8 @@ export const sidebarConfig = [
     path: '/tools/color',
     children: [
       {
-        title: 'Transform',
-        path: '/transform',
+        title: 'Converter',
+        path: '/converter',
       },
       {
         title: 'Brightness',

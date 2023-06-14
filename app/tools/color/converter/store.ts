@@ -1,8 +1,8 @@
 import { camelCase } from 'lodash-es'
 import { create } from 'zustand'
+import type { ColorPalette } from '~/lib/utils/color'
 
 import { transforms as colorTransformers } from '~/lib/utils/color'
-import type { ColorPalette } from '~/lib/utils/color'
 
 export const defaultColorVariantMap = {
   hex: '#39C5BB',

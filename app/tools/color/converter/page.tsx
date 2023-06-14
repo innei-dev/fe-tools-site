@@ -2,9 +2,9 @@
 
 'use client'
 
-import type { FC } from 'react'
 import { useDeferredValue, useEffect, useMemo } from 'react'
 import isHexColor from 'validator/es/lib/isHexColor'
+import type { FC } from 'react'
 
 import { Slider } from '~/lib/components/ui/Slider'
 import { colorValidator } from '~/lib/utils/color'
