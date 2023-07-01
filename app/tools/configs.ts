@@ -35,6 +35,10 @@ export const sidebarConfig = [
         title: 'Brightness',
         path: '/brightness',
       },
+      {
+        title: 'Random',
+        path: '/random',
+      },
     ],
   },
 ] satisfies SidebarConfig[]

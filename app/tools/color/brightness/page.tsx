@@ -4,7 +4,6 @@
 
 import * as Label from '@radix-ui/react-label'
 import { useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
 import { message } from 'react-message-popup'
 import Color from 'color'
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
@@ -12,6 +11,7 @@ import isHexColor from 'validator/es/lib/isHexColor'
 
 import { Input } from '~/lib/components/ui/Input'
 import { Slider } from '~/lib/components/ui/Slider'
+import { ColorBall } from '~/lib/components/universal/color-bell'
 
 const inputColorAtom = atom('#39C5BB')
 const brightnessColorAtom = atom('#39C5BB')
@@ -110,41 +110,6 @@ const InputColor = () => {
           <ColorBall color={inputColor} />
         </div>
       </div>
-    </>
-  )
-}
-let stacked = 0
-const ColorBall = ({ color }: { color: string }) => {
-  const [preview, setPreview] = useState(false)
-  const zIndex = ++stacked
-  return (
-    <>
-      <div
-        style={{
-          backgroundColor: color,
-        }}
-        className="h-4 w-4 rounded-full border border-black border-opacity-80"
-        role="button"
-        aria-label="Preview Color"
-        tabIndex={1}
-        onClick={() => {
-          setPreview(!preview)
-        }}
-      />
-
-      {preview &&
-        createPortal(
-          <div className="fixed bottom-0 right-0 h-[500px] w-[500px] bg-always-white">
-            <div
-              className="absolute bottom-0 right-0 h-[1000px] w-[1000px] translate-x-1/2 translate-y-1/2 rounded-full"
-              style={{
-                backgroundColor: color,
-                zIndex,
-              }}
-            />
-          </div>,
-          document.body,
-        )}
     </>
   )
 }
