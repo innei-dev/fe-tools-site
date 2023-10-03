@@ -39,6 +39,11 @@ export const sidebarConfig = [
         title: 'Random',
         path: '/random',
       },
+
+      {
+        title: 'Color Transition',
+        path: '/transition',
+      },
     ],
   },
 ] satisfies SidebarConfig[]
