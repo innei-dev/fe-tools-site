@@ -41,8 +41,8 @@ export const sidebarConfig = [
       },
 
       {
-        title: 'Color Transition',
-        path: '/transition',
+        title: 'Color Gradation',
+        path: '/gradation',
       },
     ],
   },

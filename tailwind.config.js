@@ -74,5 +74,15 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), addDynamicIconSelectors()],
+  plugins: [
+    require('tailwindcss-animate'),
+    addDynamicIconSelectors(),
+    require('tailwindcss/plugin')(({ matchUtilities }) => {
+      matchUtilities({
+        x: (value) => ({
+          [`@apply ${value.replaceAll(',', ' ')}`]: {},
+        }),
+      })
+    }),
+  ],
 }

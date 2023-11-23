@@ -7,6 +7,8 @@ import type { Metadata } from 'next'
 
 import { darkModeKey } from '~/lib/constants/ui'
 
+import { ToasterProvider } from './providers'
+
 const safeParse = (v?: string) => {
   try {
     return JSON.parse(v!)
@@ -35,6 +37,7 @@ export default async function RootLayout({
     >
       <body>{children}</body>
 
+      <ToasterProvider />
       <Analytics />
     </html>
   )

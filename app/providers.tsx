@@ -1,14 +1,9 @@
-// 'use client'
+'use client'
 
-// import { useServerInsertedHTML } from 'next/navigation'
-// // import { CssBaseline, NextUIProvider } from '@nextui-org/react'
+import { Toaster } from 'sonner'
 
-// export default function Providers({ children }: { children: JSX.Element }) {
-//   useServerInsertedHTML(() => {
-//     // return <>{CssBaseline.flush()}</>
-//   })
+import { useIsDark } from '~/lib/hooks/use-dark-mode'
 
-//   return <>{/* <NextUIProvider>{children}</NextUIProvider> */}</>
-// }
-
-export {}
+export const ToasterProvider = () => {
+  return <Toaster theme={useIsDark() ? 'dark' : 'light'} />
+}
