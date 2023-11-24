@@ -21,7 +21,7 @@ export const CodeBlock: FC<{
           navigator.clipboard.writeText(children)
           toast.success('Copied')
         }}
-        className="absolute right-0 top-0 flex p-2 text-xs opacity-0 duration-200 group-hover:opacity-100"
+        className="absolute right-0 top-0 flex p-2 text-xs text-always-white opacity-0 duration-200 group-hover:opacity-100"
       >
         Copy
       </button>
