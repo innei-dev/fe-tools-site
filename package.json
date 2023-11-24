@@ -54,7 +54,6 @@
     "next": "14.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-message-popup": "2.0.0-alpha.0",
     "react-syntax-highlighter": "^15.5.0",
     "snakecase-keys": "5.5.0",
     "sonner": "^1.2.2",

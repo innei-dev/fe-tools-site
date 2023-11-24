@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { message } from 'react-message-popup'
+import { toast } from 'sonner'
 
 let stacked = 0
 export const ColorBall = ({ color }: { color: string }) => {
@@ -22,7 +22,7 @@ export const ColorBall = ({ color }: { color: string }) => {
           setPreview(!preview)
 
           navigator.clipboard.writeText(color)
-          message.success(`Copied Hex: ${color}`)
+          toast.success(`Copied Hex: ${color}`)
         }}
       />
 

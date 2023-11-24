@@ -2,7 +2,7 @@
 
 import * as Label from '@radix-ui/react-label'
 import { useEffect, useRef, useState } from 'react'
-import { message } from 'react-message-popup'
+import { toast } from 'sonner'
 import type { ColorPalette } from '~/lib/utils/color'
 import type { FC, MouseEventHandler } from 'react'
 
@@ -35,7 +35,7 @@ export const ColorInput: FC<{
     const $el = e.target as HTMLButtonElement
     const value = $el.innerText
 
-    message.info(`Copied, ${value}`)
+    toast.info(`Copied, ${value}`)
     navigator.clipboard.writeText(value)
   }
 

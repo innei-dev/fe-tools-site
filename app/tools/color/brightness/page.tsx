@@ -4,9 +4,9 @@
 
 import * as Label from '@radix-ui/react-label'
 import { useEffect, useState } from 'react'
-import { message } from 'react-message-popup'
 import Color from 'color'
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { toast } from 'sonner'
 import isHexColor from 'validator/es/lib/isHexColor'
 
 import { Input } from '~/lib/components/ui/Input'
@@ -37,7 +37,7 @@ const ColorBrightnessPreview = () => {
       role="button"
       tabIndex={0}
       onClick={() => {
-        message.success(`Copied Hex: ${brightnessColor}`)
+        toast.success(`Copied Hex: ${brightnessColor}`)
         navigator.clipboard.writeText(brightnessColor)
       }}
     >
