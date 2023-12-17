@@ -5,6 +5,7 @@ import { EditorContent, useEditor } from '@tiptap/react'
 import { useLayoutEffect, useState } from 'react'
 import { Markdown } from 'tiptap-markdown'
 
+import Image from '@tiptap/extension-image'
 import Link from '@tiptap/extension-link'
 import StarterKit from '@tiptap/starter-kit'
 
@@ -16,12 +17,17 @@ const extensions = [
   Link.configure({
     autolink: true,
   }),
+  Image.configure({}),
   Markdown,
 ]
 
 const content = `# Hello World! 
 
-[innei](https://innei.in)`
+[innei](https://innei.in)
+
+![1217142959](https://cdn.jsdelivr.net/gh/Innei/fancy-2023@main/2023/1217142959.png)
+
+`
 
 export default () => {
   const [json, setJson] = useState({} as any)

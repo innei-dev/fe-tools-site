@@ -47,6 +47,9 @@ dependencies:
   '@swc/helpers':
     specifier: 0.5.3
     version: 0.5.3
+  '@tiptap/extension-image':
+    specifier: 2.1.13
+    version: 2.1.13(@tiptap/core@2.1.13)
   '@tiptap/extension-link':
     specifier: 2.1.13
     version: 2.1.13(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)
@@ -1511,6 +1514,14 @@ packages:
     dependencies:
       '@tiptap/core': 2.1.13(@tiptap/pm@2.1.13)
       '@tiptap/pm': 2.1.13
+    dev: false
+
+  /@tiptap/extension-image@2.1.13(@tiptap/core@2.1.13):
+    resolution: {integrity: sha512-7oVAos+BU4KR/zQsfltrd8hgIxKxyxZ19dhwb1BJI2Nt3Mnx+yFPRlRSehID6RT9dYqgW4UW5d6vh/3HQcYYYw==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.1.13(@tiptap/pm@2.1.13)
     dev: false
 
   /@tiptap/extension-italic@2.1.13(@tiptap/core@2.1.13):
