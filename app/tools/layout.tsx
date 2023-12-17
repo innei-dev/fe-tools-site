@@ -42,6 +42,7 @@ export default function ToolLayout({
               href={repository.url}
               className="ml-4 inline-flex flex-shrink-0 items-center text-black"
               target="_blank"
+              rel="noreferrer"
             >
               <i className="icon-[mingcute--github-line] inline-block" />
             </a>
@@ -73,7 +74,9 @@ export default function ToolLayout({
         ))}
       </aside>
 
-      <main className="ml-[250px] min-h-screen p-4">{children}</main>
+      <main className="relative ml-[250px] flex min-h-screen flex-col p-4">
+        {children}
+      </main>
     </div>
   )
 }

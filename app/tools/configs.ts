@@ -46,4 +46,14 @@ export const sidebarConfig = [
       },
     ],
   },
+  {
+    title: 'Editor',
+    path: '/tools/editor',
+    children: [
+      {
+        path: '/tiptap-schema',
+        title: 'Tiptap Schema',
+      },
+    ],
+  },
 ] satisfies SidebarConfig[]
