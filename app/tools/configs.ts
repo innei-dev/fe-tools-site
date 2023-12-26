@@ -44,6 +44,11 @@ export const sidebarConfig = [
         title: 'Color Gradation',
         path: '/gradation',
       },
+
+      {
+        title: 'Color Invert',
+        path: '/invert',
+      },
     ],
   },
   {

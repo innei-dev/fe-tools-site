@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react'
 import Color from 'color'
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { toast } from 'sonner'
-import isHexColor from 'validator/es/lib/isHexColor'
 
 import { Input } from '~/lib/components/ui/Input'
 import { Slider } from '~/lib/components/ui/Slider'
@@ -88,20 +87,26 @@ const ColorBrightnessSlider = () => {
     </div>
   )
 }
+
 const InputColor = () => {
   const [inputColor, setInputColor] = useAtom(inputColorAtom)
   return (
     <>
-      <Label.Root htmlFor="Hex">Hex Color</Label.Root>
+      <Label.Root htmlFor="color">Source Color</Label.Root>
       <div className="grid grid-cols-[1fr_2fr] gap-4 [&>*]:relative [&>*]:flex">
         <div className="flex flex-col">
           <Input
             className="inline-block w-[300px]"
             type="text"
+            id="color"
             value={inputColor}
             onChange={(e) => {
               const value = e.target.value
-              isHexColor(value) && setInputColor(value)
+
+              try {
+                const hex = Color(value).hex()
+                setInputColor(hex)
+              } catch {}
             }}
           />
         </div>
