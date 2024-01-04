@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 
 import { oneDark } from '@codemirror/theme-one-dark'
 import { EditorView } from '@codemirror/view'
+// @ts-expect-error
 import { githubLight } from '@ddietr/codemirror-themes/theme/github-light'
 
 import { useIsUnmounted } from '~/hooks/use-lifecycle'

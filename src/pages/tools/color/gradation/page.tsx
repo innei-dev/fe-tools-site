@@ -58,7 +58,7 @@ const ColorTransition = () => {
       />
 
       <div className="flex w-[700px]">
-        {colors.map((color, i) => {
+        {colors.map((color) => {
           return (
             <div
               key={color}

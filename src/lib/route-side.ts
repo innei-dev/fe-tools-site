@@ -22,7 +22,9 @@ export const getSidebarConfig = () => {
       group,
       existingGroup.concat({
         children: [],
-        path: router.routeTree.path + (child.path === '/' ? '' : child.path),
+        path:
+          router.routeTree.path +
+          ((child.path as any) === '/' ? '' : child.path),
         title: child.options.meta?.title || 'Untitled',
       } as SidebarConfig),
     )
