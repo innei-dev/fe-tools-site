@@ -93,6 +93,10 @@ const ColorGradient = () => {
     <div className="flex flex-col gap-2">
       <Label className="ml-1 text-lg font-medium">Color Gradient</Label>
 
+      <a href="https://uicolors.app/create" target="_blank" rel="noreferrer">
+        https://uicolors.app/create
+      </a>
+
       <Input
         placeholder="Base Color"
         className="inline-block w-[300px]"
