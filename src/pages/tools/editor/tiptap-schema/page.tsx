@@ -19,7 +19,7 @@ const extensions = [
   }),
   Image.configure({}),
   Markdown,
-]
+] as any
 
 const content = `# Hello World! 
 

@@ -24,8 +24,8 @@
   "dependencies": {
     "@radix-ui/colors": "3.0.0",
     "@radix-ui/react-scroll-area": "1.0.5",
-    "@tanstack/react-router": "1.15.13",
-    "@tanstack/router-devtools": "1.15.13",
+    "@tanstack/react-router": "1.1.8",
+    "@tanstack/router-devtools": "1.1.8",
     "clsx": "2.1.0",
     "jotai": "2.6.4",
     "lodash-es": "4.17.21",
