@@ -40,7 +40,7 @@ export const Sidebar: FC = () => {
 
       {getSidebarConfig().map((config) => (
         <section key={config.title}>
-          <p className="my-4 text-sm font-medium text-sand-10">
+          <p className="my-4 text-sm font-semibold text-gray-12">
             {config.title}
           </p>
           {config.children.map((child) => {
@@ -50,8 +50,8 @@ export const Sidebar: FC = () => {
               <Link to={jointPath} key={jointPath}>
                 <h2
                   className={cn(
-                    'my-2 text-base transition-colors duration-200 ease-in-out hover:text-accent hover:text-opacity-80',
-                    pathname === jointPath ? 'text-accent' : '',
+                    'my-2 text-base text-primary/60 transition-colors duration-200 ease-in-out hover:text-primary hover:text-opacity-80',
+                    pathname === jointPath ? 'font-medium text-primary' : '',
                   )}
                 >
                   {child.title}
