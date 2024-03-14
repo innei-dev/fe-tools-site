@@ -14,7 +14,7 @@ export const rootRoute = new RootRoute({
       <main className="relative ml-[250px] flex min-h-screen flex-col p-4">
         <Outlet />
       </main>
-      <TanStackRouterDevtools />
+      {import.meta.env.DEV && <TanStackRouterDevtools />}
     </div>
   ),
 })
