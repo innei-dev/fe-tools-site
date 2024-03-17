@@ -6,7 +6,7 @@ import radixColors from '@radix-ui/colors'
 
 export default resolveConfig({
   darkMode: ['class'],
-  content: ['./src/**/*.{ts,tsx}'],
+  content: ['./src/**/*.{ts,tsx}', './node_modules/rc-modal-sheet/**/*.js'],
   theme: {
     container: {
       center: true,
