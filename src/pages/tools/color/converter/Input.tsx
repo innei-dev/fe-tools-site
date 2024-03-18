@@ -101,6 +101,7 @@ export const ColorInput: FC<{
   )
 }
 
+// @ts-expect-error
 const parseColor = (colorString: string, type: SupportedColorType) => {
   // switch (type) {
   //   case 'oklch': {

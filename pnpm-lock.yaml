@@ -135,8 +135,8 @@ dependencies:
     specifier: 0.357.0
     version: 0.357.0(react@18.2.0)
   rc-modal-sheet:
-    specifier: 0.2.2
-    version: 0.2.2(@radix-ui/react-dialog@1.0.5)(clsx@2.1.0)(framer-motion@11.0.13)(tailwind-merge@2.2.1)(vaul@0.9.0)
+    specifier: 0.2.3
+    version: 0.2.3(@radix-ui/react-dialog@1.0.5)(clsx@2.1.0)(framer-motion@11.0.13)(tailwind-merge@2.2.1)(vaul@0.9.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -5404,8 +5404,8 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /rc-modal-sheet@0.2.2(@radix-ui/react-dialog@1.0.5)(clsx@2.1.0)(framer-motion@11.0.13)(tailwind-merge@2.2.1)(vaul@0.9.0):
-    resolution: {integrity: sha512-rEY9p7svHOjxZ09VCrXU5m9PMKKFTgEfHJQJaQAD7Fj36y4oWaDqN+sUVeOD8IsJEbv8OSAcPsfEllmTAJ9MIg==}
+  /rc-modal-sheet@0.2.3(@radix-ui/react-dialog@1.0.5)(clsx@2.1.0)(framer-motion@11.0.13)(tailwind-merge@2.2.1)(vaul@0.9.0):
+    resolution: {integrity: sha512-OvvjAwdUAZPsBHWPvAsWNiicENixIvsmMxkmcBlMIIeSR8WROENhuzXWHVFRvzj9Dg/euDBbmrIybnOmMJPudg==}
     peerDependencies:
       '@radix-ui/react-dialog': ^1
       clsx: '*'

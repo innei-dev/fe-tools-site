@@ -65,7 +65,7 @@
     "jsondiffpatch": "0.6.0",
     "lodash-es": "4.17.21",
     "lucide-react": "0.357.0",
-    "rc-modal-sheet": "0.2.2",
+    "rc-modal-sheet": "0.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-syntax-highlighter": "^15.5.0",

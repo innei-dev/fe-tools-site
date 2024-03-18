@@ -4,10 +4,7 @@ import { useAtom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
 import { diff, patch } from 'jsondiffpatch'
 import { cloneDeep } from 'lodash-es'
-import {
-  useCurrentModal,
-  useModalStack,
-} from 'rc-modal-sheet/dist/modal/hooks.js'
+import { useCurrentModal, useModalStack } from 'rc-modal-sheet'
 import { toast } from 'sonner'
 import type { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types'
 import type { ExcalidrawImperativeAPI } from '@excalidraw/excalidraw/types/types'
