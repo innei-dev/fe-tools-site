@@ -29,7 +29,7 @@ export const Sidebar: FC = () => {
           </button>
           <a
             href={repository.url}
-            className="ml-4 inline-flex flex-shrink-0 items-center text-black"
+            className="ml-4 inline-flex flex-shrink-0 items-center text-black dark:text-white"
             target="_blank"
             rel="noreferrer"
           >
