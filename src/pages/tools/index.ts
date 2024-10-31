@@ -7,6 +7,7 @@ import { excalidrawRoute } from './editor/excalidraw/route'
 import { tiptapRoute } from './editor/tiptap-schema/route'
 import { camelCaseRoute } from './object/camelcase-keys/route'
 import { snakeCaseRoute } from './object/snakecase-keys/route'
+import { semverRoute } from './semver/main/route'
 
 export const ToolsRoutes = [
   brightnessRoute,
@@ -18,4 +19,5 @@ export const ToolsRoutes = [
   camelCaseRoute,
   excalidrawRoute,
   snakeCaseRoute,
+  semverRoute,
 ]
