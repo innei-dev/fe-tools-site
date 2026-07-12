@@ -63,7 +63,7 @@
     "jotai": "2.9.0",
     "js-cookie": "3.0.5",
     "jsondiffpatch": "0.6.0",
-    "lodash-es": "4.17.21",
+    "lodash-es": "4.18.1",
     "lucide-react": "0.408.0",
     "rc-modal-sheet": "0.2.4",
     "react": "^18.3.1",
