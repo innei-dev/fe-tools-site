@@ -43,7 +43,7 @@
     "@tanstack/react-router": "1.1.8",
     "@tanstack/router-devtools": "1.1.8",
     "@tiptap/extension-image": "2.4.0",
-    "@tiptap/extension-link": "2.4.0",
+    "@tiptap/extension-link": "2.10.4",
     "@tiptap/pm": "2.4.0",
     "@tiptap/react": "2.4.0",
     "@tiptap/starter-kit": "2.4.0",
