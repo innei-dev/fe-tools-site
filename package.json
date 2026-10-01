@@ -102,7 +102,7 @@
     "postcss": "8.4.39",
     "prettier": "3.3.2",
     "typescript": "5.5.3",
-    "vite": "^5.3.3",
+    "vite": "^6.0.0",
     "vite-tsconfig-paths": "4.3.2",
     "windy-radix-palette": "2.0.0-beta.7"
   },
